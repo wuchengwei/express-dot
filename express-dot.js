@@ -67,6 +67,10 @@ exports.setGlobals = function(globals) {
   _globals = globals;
 };
 
+exports.setTemplateSettings = function(settings) {
+  doT.templateSettings = settings;
+};
+
 exports.__express = function(filename, options, cb) {
   'use strict';
   cb = (typeof cb === 'function') ? cb : function() {};
