@@ -68,7 +68,11 @@ exports.setGlobals = function(globals) {
 };
 
 exports.setTemplateSettings = function(settings) {
-  doT.templateSettings = settings;
+  for (var i in settings) {
+    if (doT.templateSettings[i] !== undefined) {
+      doT.templateSettings[i] = settings[i];
+    }
+  }
 };
 
 exports.__express = function(filename, options, cb) {
