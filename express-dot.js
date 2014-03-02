@@ -75,6 +75,10 @@ exports.setTemplateSettings = function(settings) {
   }
 };
 
+exports.getTemplateSettings = function(settings) {
+  return doT.templateSettings;
+};
+
 exports.__express = function(filename, options, cb) {
   'use strict';
   cb = (typeof cb === 'function') ? cb : function() {};
