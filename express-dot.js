@@ -89,7 +89,6 @@ exports.setInterpolationSymbols = function(startSymbol, endSymbol) {
       doT.templateSettings[option] = _toRegExp(regexStr);
     }
   }
-  console.log(doT.templateSettings);
 };
 
 function _regexStr(str) {
