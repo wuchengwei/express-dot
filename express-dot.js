@@ -123,3 +123,7 @@ exports.__express = function(filename, options, cb) {
     return _renderWithLayout(filename, layoutTemplate, options, cb);
   });
 };
+
+
+exports.template = doT.template;
+exports.compile = doT.compile;
