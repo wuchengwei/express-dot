@@ -2,7 +2,6 @@ var fs = require('fs');
 var path = require('path');
 var doT = require('dot');
 var async = require('async');
-var path = require('path'); 
 
 var _cache = {};
 var _partialsCache = {};
@@ -75,6 +74,33 @@ exports.setTemplateSettings = function(settings) {
   }
 };
 
+exports.getTemplateSettings = function(settings) {
+  return doT.templateSettings;
+};
+
+exports.setInterpolationSymbols = function(startSymbol, endSymbol) {
+  for (option in doT.templateSettings) {
+    var value = doT.templateSettings[option];
+    if (value instanceof RegExp) {
+      var regexStr = value.toString()
+      regexStr = regexStr
+                  .replace(/\\\{\\\{/g, _regexStr(startSymbol))
+                  .replace(/\\\}\\\}/g, _regexStr(endSymbol));
+      doT.templateSettings[option] = _toRegExp(regexStr);
+    }
+  }
+};
+
+function _regexStr(str) {
+  return str.replace(/([^a-z0-9_])/ig, '\\$1')
+}
+
+var regexpStringPattern = /^\/(.*)\/([gimy]*)$/;
+function _toRegExp(str) {
+    var rx = str.match(regexpStringPattern);
+    if (rx) return new RegExp(rx[1], rx[2]);
+}
+
 exports.__express = function(filename, options, cb) {
   'use strict';
   cb = (typeof cb === 'function') ? cb : function() {};
@@ -97,3 +123,7 @@ exports.__express = function(filename, options, cb) {
     return _renderWithLayout(filename, layoutTemplate, options, cb);
   });
 };
+
+
+exports.template = doT.template;
+exports.compile = doT.compile;
